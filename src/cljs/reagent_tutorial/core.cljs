@@ -8,7 +8,7 @@
 
 (def current-elem (r/atom 0))
 
-(def max-val 20)
+(def max-val (* 10 10))
 
 (defn move-forwards []
   (swap! current-elem (fn [v]
@@ -69,15 +69,30 @@
     (list-elem-builder (range max-val))])
 
 
-(defn main-component []
+(defn main-component-old []
   [:div
     [outer-list]
     [:div
      [backwards-button]
      [forwards-button]
-     [reset-button]]]
+     [reset-button]]])
 
-  )
+(defn div-builder [items]
+   (doall
+     (for [item items]
+       [:h1 {:key item
+             :style {:display (if (= @current-elem item) "" "none")}} item])))
+
+(defn number-thing []
+  [:h1 @current-elem])
+
+(defn main-component []
+  [:div
+   (div-builder (range max-val))
+   [:div
+     [backwards-button]
+     [forwards-button]
+     [reset-button]]])
 
 (def keycode-map
   {keycodes/LEFT  move-backwards
