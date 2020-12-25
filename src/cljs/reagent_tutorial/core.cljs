@@ -46,36 +46,26 @@
             :value "Reset"
             :on-click reset-current-elem}]])
 
+(defn slide-component [i inner-vec]
+  [:div {:key i
+         :style {:display (if (= @current-elem i) "" "none")}}
+   inner-vec])
 
-(defn add-attrs-map [hiccup-vec]
-  (if (= (count hiccup-vec) 2)
-   [(first hiccup-vec) {} (last hiccup-vec)]
-   hiccup-vec))
+(defn slide-builder [slides]
+  (map-indexed (fn [i slide]
+                 [slide-component i slide])
+               slides))
 
-(defn set-list-element-bold [list-elem]
-  (let [[tag attrs value] (add-attrs-map list-elem)]
-    (if (= @current-elem value)
-      [tag (assoc attrs :style {:font-weight "bold"}) value]
-      [tag attrs value])))
-
-(defn list-elem-builder [items]
-  (doall
-    (for [item items]
-      (set-list-element-bold [:li {:key item} item]))))
-
-
-(defn outer-list []
-  [:ul
-    (list-elem-builder (range max-val))])
-
-
-(defn main-component-old []
-  [:div
-    [outer-list]
-    [:div
-     [backwards-button]
-     [forwards-button]
-     [reset-button]]])
+(def my-slides
+  [
+   [:h1 "Hi there"]
+   [:div
+    [:h2 "My first slide"]
+    [:p "This is my first slide"]]
+   [:div
+    [:h2 "A second slide"]
+    [:p "This is my second slide"]]
+   ])
 
 (defn div-builder [items]
    (doall
@@ -88,7 +78,7 @@
 
 (defn main-component []
   [:div
-   (div-builder (range max-val))
+   (slide-builder my-slides)
    [:div
      [backwards-button]
      [forwards-button]
@@ -99,11 +89,11 @@
    keycodes/RIGHT move-forwards
    keycodes/H     move-backwards
    keycodes/L     move-forwards
+   keycodes/SPACE move-forwards
    keycodes/ESC   reset-current-elem})
 
 (comment
   (assoc {} :style "font-weight:bold;")
-  (list-elem-builder (range 10))
   keycodes/D
   (get keycode-map keycodes/ArrowRight)
   )
