@@ -39,22 +39,22 @@
 
 ; Slide controls
 (defn forwards-button []
-   [:input {:type "button"
-            :value ">>"
-            :style {:display "inline"}
-            :on-click move-forwards}])
+  [:input {:type "button"
+           :value ">>"
+           :style {:display "inline"}
+           :on-click move-forwards}])
 
 (defn backwards-button []
-   [:input {:type "button"
-            :value "<<"
-            :style {:display "inline"}
-            :on-click move-backwards}])
+  [:input {:type "button"
+           :value "<<"
+           :style {:display "inline"}
+           :on-click move-backwards}])
 
 (defn reset-button []
-   [:input {:type "button"
-            :value "Reset"
-            :style {:display "inline"}
-            :on-click reset-current-elem}])
+  [:input {:type "button"
+           :value "Reset"
+           :style {:display "inline"}
+           :on-click reset-current-elem}])
 
 (defn controls []
   [:div
@@ -95,10 +95,8 @@
 
 (defn on-keydown [e]
   (.preventDefault e)
-  ; (js/console.log (.. e -keyCode))
   (when-let [f (get keycode-map (.. e -keyCode))]
-    (f))
-  )
+    (f)))
 
 (defn mount-root []
   (rdom/render [main-component] (.getElementById js/document "app")))
@@ -109,8 +107,5 @@
   (gev/listen js/document "keydown" on-keydown))
 
 (comment
-  (assoc {} :style "font-weight:bold;")
-  keycodes/D
-  (get keycode-map keycodes/ArrowRight)
   )
 
