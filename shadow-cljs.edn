@@ -1,0 +1,8 @@
+{:lein         true
+ :builds       {:app {:target     :browser
+                      :output-dir "resources/public/js"
+                      :asset-path "/js"
+                      :modules    {:app {:entries [reagent-tutorial.core]}}
+                      :devtools   {:after-load reagent-tutorial.core/mount-root}}}
+ :dev-http     {3000 {:root    "resources/public"
+                      :handler reagent-tutorial.handler/app}}}
