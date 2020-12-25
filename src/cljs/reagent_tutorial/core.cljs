@@ -6,9 +6,21 @@
    [goog.events :as gev])
   (:import [goog.events EventType KeyHandler]))
 
-(def current-elem (r/atom 0))
+(def my-slides
+  [
+   [:h1 "Hi there"]
+   [:div
+    [:h2 "My first slide"]
+    [:p "This is my first slide"]]
+   [:div
+    [:h2 "A second slide"]
+    [:p "This is my second slide"]]
+   ])
 
-(def max-val (* 10 10))
+(def max-val (count my-slides))
+
+; Movement functions & state
+(def current-elem (r/atom 0))
 
 (defn move-forwards []
   (swap! current-elem (fn [v]
@@ -25,27 +37,33 @@
 (defn reset-current-elem []
   (reset! current-elem 0))
 
+; Slide controls
 (defn forwards-button []
-  [:div
-   {:style {:display "inline"}}
    [:input {:type "button"
             :value ">>"
-            :on-click move-forwards}]])
+            :style {:display "inline"}
+            :on-click move-forwards}])
 
 (defn backwards-button []
-  [:div
-   {:style {:display "inline"}}
    [:input {:type "button"
             :value "<<"
-            :on-click move-backwards}]])
+            :style {:display "inline"}
+            :on-click move-backwards}])
 
 (defn reset-button []
-  [:div
-   {:style {:display "inline"}}
    [:input {:type "button"
             :value "Reset"
-            :on-click reset-current-elem}]])
+            :style {:display "inline"}
+            :on-click reset-current-elem}])
 
+(defn controls []
+  [:div
+   [backwards-button]
+   [forwards-button]
+   [reset-button]])
+
+
+; Slide components & "builders"
 (defn slide-component [i inner-vec]
   [:div {:key i
          :style {:display (if (= @current-elem i) "" "none")}}
@@ -56,33 +74,16 @@
                  [slide-component i slide])
                slides))
 
-(def my-slides
-  [
-   [:h1 "Hi there"]
-   [:div
-    [:h2 "My first slide"]
-    [:p "This is my first slide"]]
-   [:div
-    [:h2 "A second slide"]
-    [:p "This is my second slide"]]
-   ])
-
 (defn div-builder [items]
    (doall
      (for [item items]
        [:h1 {:key item
              :style {:display (if (= @current-elem item) "" "none")}} item])))
 
-(defn number-thing []
-  [:h1 @current-elem])
-
 (defn main-component []
   [:div
    (slide-builder my-slides)
-   [:div
-     [backwards-button]
-     [forwards-button]
-     [reset-button]]])
+   [controls]])
 
 (def keycode-map
   {keycodes/LEFT  move-backwards
@@ -91,12 +92,6 @@
    keycodes/L     move-forwards
    keycodes/SPACE move-forwards
    keycodes/ESC   reset-current-elem})
-
-(comment
-  (assoc {} :style "font-weight:bold;")
-  keycodes/D
-  (get keycode-map keycodes/ArrowRight)
-  )
 
 (defn on-keydown [e]
   (.preventDefault e)
@@ -112,3 +107,10 @@
   ; What
   (mount-root)
   (gev/listen js/document "keydown" on-keydown))
+
+(comment
+  (assoc {} :style "font-weight:bold;")
+  keycodes/D
+  (get keycode-map keycodes/ArrowRight)
+  )
+
