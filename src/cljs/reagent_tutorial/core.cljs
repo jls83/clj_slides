@@ -47,13 +47,13 @@
             :on-click reset-current-elem}]])
 
 
-(defn whatter [hiccup-vec]
+(defn add-attrs-map [hiccup-vec]
   (if (= (count hiccup-vec) 2)
    [(first hiccup-vec) {} (last hiccup-vec)]
    hiccup-vec))
 
-(defn thinger [list-elem]
-  (let [[tag attrs value] (whatter list-elem)]
+(defn set-list-element-bold [list-elem]
+  (let [[tag attrs value] (add-attrs-map list-elem)]
     (if (= @current-elem value)
       [tag (assoc attrs :style {:font-weight "bold"}) value]
       [tag attrs value])))
@@ -61,7 +61,7 @@
 (defn list-elem-builder [items]
   (doall
     (for [item items]
-      (thinger [:li {:key item} item]))))
+      (set-list-element-bold [:li {:key item} item]))))
 
 
 (defn outer-list []
