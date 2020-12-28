@@ -62,16 +62,17 @@
    [forwards-button]
    [reset-button]])
 
-
 ; Slide components & "builders"
 (defn slide-component [i inner-vec]
   [:div {:key i
+         :id (str "slide-" i)
          :style {:display (if (= @current-elem i) "" "none")}}
    inner-vec])
 
 (defn slide-builder [slides]
   (->> slides
-    (map-indexed (fn [i slide] [slide-component i slide]))))
+    (map-indexed (fn [i slide]
+                   ^{:key i} [slide-component i slide]))))
 
 (defn main-component []
   [:div
