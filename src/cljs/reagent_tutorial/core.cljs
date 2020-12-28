@@ -57,7 +57,7 @@
            :on-click reset-current-elem}])
 
 (defn controls []
-  [:div
+  [:div {:id "controls-container"}
    [backwards-button]
    [forwards-button]
    [reset-button]])
@@ -70,19 +70,13 @@
    inner-vec])
 
 (defn slide-builder [slides]
-  (map-indexed (fn [i slide]
-                 [slide-component i slide])
-               slides))
-
-(defn div-builder [items]
-   (doall
-     (for [item items]
-       [:h1 {:key item
-             :style {:display (if (= @current-elem item) "" "none")}} item])))
+  (->> slides
+    (map-indexed (fn [i slide] [slide-component i slide]))))
 
 (defn main-component []
   [:div
-   (slide-builder my-slides)
+   [:div {:id "slides-container"}
+     (slide-builder my-slides)]
    [controls]])
 
 (def keycode-map
@@ -102,10 +96,8 @@
   (rdom/render [main-component] (.getElementById js/document "app")))
 
 (defn init! []
-  ; What
   (mount-root)
   (gev/listen js/document "keydown" on-keydown))
 
 (comment
   )
-
