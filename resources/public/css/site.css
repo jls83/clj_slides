@@ -1,12 +1,14 @@
 .body-container {
-  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
+  font-family: 'Inconsolata', serif;
+  /* font-family: '', Verdana, Helvetica, Arial, sans-serif; */
   max-width: 640px;
   margin: 0 auto;
   padding-top: 72px;
   -webkit-font-smoothing: antialiased;
   font-size: 1.125em;
-  color: #333;
+  color: #ddd;
   line-height: 1.5em;
+  background-color: #333;
 }
 
 h1, h2, h3 {
