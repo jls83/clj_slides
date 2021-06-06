@@ -1,23 +1,15 @@
 (ns reagent-tutorial.core
   (:require
-   [reagent.core :as r]
-   [reagent.dom :as rdom]
-   [goog.events.KeyCodes :as keycodes]
-   [goog.events :as gev])
+    [cljs.reader :refer [read-string]]
+    [reagent.core :as r]
+    [reagent.dom :as rdom]
+    [ajax.core :refer [GET]]
+    [goog.events.KeyCodes :as keycodes]
+    [goog.events :as gev])
   (:import [goog.events EventType KeyHandler]))
 
-(def my-slides
-  [
-   [:h1 "Hi there"]
-   [:div
-    [:h2 "My first slide"]
-    [:p "This is my first slide"]]
-   [:div
-    [:h2 "A second slide"]
-    [:p "This is my second slide"]]
-   ])
-
-(def max-val (count my-slides))
+; TODO: Replace this with a "selector" for `my-slides`
+(def max-val 100)
 
 ; Movement functions & state
 (def current-elem (r/atom 0))
@@ -74,11 +66,20 @@
     (map-indexed (fn [i slide]
                    ^{:key i} [slide-component i slide]))))
 
+(defn fetch-slides! [data]
+  (GET "/slides"
+     {:handler #(reset! data (read-string %))
+      :error-handler (fn [{:keys [status status-text]}]
+                       (js/console.log status status-text))}))
+
 (defn main-component []
-  [:div
-   [:div {:id "slides-container"}
-     (slide-builder my-slides)]
-   [controls]])
+  (let [my-slides (r/atom nil)]
+    (fetch-slides! my-slides)
+    (fn []
+      [:div
+       [:div {:id "slides-container"}
+         (slide-builder @my-slides)]
+       [controls]])))
 
 (def keycode-map
   {keycodes/LEFT  move-backwards
@@ -101,4 +102,9 @@
   (gev/listen js/document "keydown" on-keydown))
 
 (comment
+  (read-string (pr-str [1 2 3]))
+  (let [foo (r/atom nil)]
+
+    (fetch-slides! foo)
+    (println @foo))
   )
