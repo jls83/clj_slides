@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/reagent_tutorial.jar clojure.main -m reagent-tutorial.server
+web: java $JVM_OPTS -cp target/clj_slides.jar clojure.main -m clj-slides.server

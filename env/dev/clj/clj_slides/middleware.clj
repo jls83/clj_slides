@@ -1,4 +1,4 @@
-(ns reagent-tutorial.middleware
+(ns clj-slides.middleware
   (:require
    [ring.middleware.content-type :refer [wrap-content-type]]
    [ring.middleware.params :refer [wrap-params]]

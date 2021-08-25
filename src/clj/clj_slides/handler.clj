@@ -1,7 +1,7 @@
-(ns reagent-tutorial.handler
+(ns clj-slides.handler
   (:require
    [reitit.ring :as reitit-ring]
-   [reagent-tutorial.middleware :refer [middleware]]
+   [clj-slides.middleware :refer [middleware]]
    [hiccup.page :refer [include-js include-css html5]]
    [commonmark-hiccup.core :refer [markdown->hiccup default-config]]
    [config.core :refer [env]]))
@@ -22,7 +22,7 @@
 
 (def mount-target
   [:div#app
-   [:h2 "Welcome to reagent_tutorial"]
+   [:h2 "Welcome to clj_slides"]
    [:p "please wait while Figwheel/shadow-cljs is waking up ..."]
    [:p "(Check the js console for hints if nothing exciting happens.)"]])
 
@@ -39,7 +39,7 @@
    [:body {:class "body-container"}
     mount-target
     (include-js "/js/app.js")
-    [:script "reagent_tutorial.core.init_BANG_()"]]))
+    [:script "clj_slides.core.init_BANG_()"]]))
 
 (defn index-handler
   [_request]

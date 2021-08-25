@@ -1,5 +1,5 @@
-(ns reagent-tutorial.repl
-  (:use reagent-tutorial.handler
+(ns clj-slides.repl
+  (:use clj-slides.handler
         figwheel-sidecar.repl-api
         ring.server.standalone
         [ring.middleware file-info file]))

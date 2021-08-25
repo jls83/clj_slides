@@ -1,5 +1,5 @@
-(ns reagent-tutorial.prod
-  (:require [reagent-tutorial.core :as core]))
+(ns clj-slides.prod
+  (:require [clj-slides.core :as core]))
 
 ;;ignore println statements in prod
 (set! *print-fn* (fn [& _]))

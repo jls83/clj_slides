@@ -1,4 +1,4 @@
-(defproject reagent_tutorial "0.1.0-SNAPSHOT"
+(defproject clj_slides "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -28,12 +28,12 @@
             [lein-asset-minifier "0.4.6"
              :exclusions [org.clojure/clojure]]]
 
-  :ring {:handler reagent-tutorial.handler/app
-         :uberwar-name "reagent_tutorial.war"}
+  :ring {:handler clj-slides.handler/app
+         :uberwar-name "clj-slides.war"}
 
   :min-lein-version "2.5.0"
-  :uberjar-name "reagent_tutorial.jar"
-  :main reagent-tutorial.server
+  :uberjar-name "clj-slides.jar"
+  :main clj-slides.server
   :clean-targets ^{:protect false}
   [:target-path
    [:cljsbuild :builds :app :compiler :output-dir]
@@ -58,9 +58,9 @@
               :pretty-print  false}}
             :app
             {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
-             :figwheel {:on-jsload "reagent-tutorial.core/mount-root"}
+             :figwheel {:on-jsload "clj-slides.core/mount-root"}
              :compiler
-             {:main "reagent_tutorial.dev"
+             {:main "clj_slides.dev"
               :asset-path "/js/out"
               :output-to "target/cljsbuild/public/js/app.js"
               :output-dir "target/cljsbuild/public/js/out"
@@ -82,11 +82,11 @@
                       refactor-nrepl.middleware/wrap-refactor
                       ]
    :css-dirs ["resources/public/css"]
-   :ring-handler reagent-tutorial.handler/app}
+   :ring-handler clj-slides.handler/app}
 
 
 
-  :profiles {:dev {:repl-options {:init-ns reagent-tutorial.repl}
+  :profiles {:dev {:repl-options {:init-ns clj-slides.repl}
                    :dependencies [[cider/piggieback "0.5.2"]
                                   [binaryage/devtools "1.0.2"]
                                   [ring/ring-mock "0.4.0"]

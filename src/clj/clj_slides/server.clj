@@ -1,6 +1,6 @@
-(ns reagent-tutorial.server
+(ns clj-slides.server
     (:require
-     [reagent-tutorial.handler :refer [app]]
+     [clj-slides.handler :refer [app]]
      [config.core :refer [env]]
      [ring.adapter.jetty :refer [run-jetty]])
     (:gen-class))

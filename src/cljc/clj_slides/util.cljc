@@ -1,4 +1,4 @@
-(ns reagent-tutorial.util)
+(ns clj-slides.util)
 
 (defn foo-cljc [x]
   "I don't do a whole lot."

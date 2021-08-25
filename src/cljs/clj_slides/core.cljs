@@ -1,4 +1,4 @@
-(ns reagent-tutorial.core
+(ns clj-slides.core
   (:require
     [cljs.reader :refer [read-string]]
     [reagent.core :as r]

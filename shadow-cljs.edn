@@ -2,7 +2,7 @@
  :builds       {:app {:target     :browser
                       :output-dir "resources/public/js"
                       :asset-path "/js"
-                      :modules    {:app {:entries [reagent-tutorial.core]}}
-                      :devtools   {:after-load reagent-tutorial.core/mount-root}}}
+                      :modules    {:app {:entries [clj-slides.core]}}
+                      :devtools   {:after-load clj-slides.core/mount-root}}}
  :dev-http     {3000 {:root    "resources/public"
-                      :handler reagent-tutorial.handler/app}}}
+                      :handler clj-slides.handler/app}}}

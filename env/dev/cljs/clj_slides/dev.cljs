@@ -1,6 +1,6 @@
-(ns ^:figwheel-no-load reagent-tutorial.dev
+(ns ^:figwheel-no-load clj-slides.dev
   (:require
-    [reagent-tutorial.core :as core]
+    [clj-slides.core :as core]
     [devtools.core :as devtools]))
 
 (extend-protocol IPrintWithWriter
