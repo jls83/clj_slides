@@ -16,3 +16,6 @@ pom.xml.asc
 /node_modules
 /.shadow-cljs/
 /resources/public/js/
+
+/resources/public/css/site.min.css
+.lsp/
