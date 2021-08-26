@@ -1,7 +1,6 @@
 (ns clj-slides.server
     (:require
-     [clj-slides.handler :refer [app]]
-     [config.core :refer [env]]
+     [clj-slides.handler :refer [app-creator]]
      [ring.adapter.jetty :refer [run-jetty]]
      [clojure.tools.cli :refer [parse-opts]])
     (:gen-class))
@@ -16,5 +15,6 @@
 
 (defn -main [& args]
   (let [parsed-opts (parse-opts args cli-options)
-        port (get-in parsed-opts [:options :port])]
-    (run-jetty #'app {:port port :join? false})))
+        port (get-in parsed-opts [:options :port])
+        slides-path (get-in parsed-opts [:options :input])]
+    (run-jetty (app-creator slides-path) {:port port :join? false})))

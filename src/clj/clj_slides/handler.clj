@@ -33,23 +33,25 @@
    :headers {"Content-Type" "text/html"}
    :body (loading-page)})
 
-(defn slide-handler
-  [_request]
-  {:status 200
-   :headers {"Content-Type" "application/edn"}
-   :body (pr-str parser/slides-paginated)})
+(defn slide-handler-creator [slides-paginated]
+  (fn [_request]
+    {:status 200
+     :headers {"Content-Type" "application/edn"}
+     :body (pr-str slides-paginated)}))
 
-(def app
-  (reitit-ring/ring-handler
-   (reitit-ring/router
-    [["/" {:get {:handler index-handler}}]
-     ["/items"
-      ["" {:get {:handler index-handler}}]
-      ["/:item-id" {:get {:handler index-handler
-                          :parameters {:path {:item-id int?}}}}]]
-     ["/about" {:get {:handler index-handler}}]
-     ["/slides" {:get {:handler slide-handler}}]])
-   (reitit-ring/routes
-    (reitit-ring/create-resource-handler {:path "/" :root "/public"})
-    (reitit-ring/create-default-handler))
-   {:middleware middleware}))
+(defn app-creator [slides-path]
+  (let [slides-paginated (parser/get-paginated-slides slides-path)
+        slide-handler (slide-handler-creator slides-paginated)]
+    (reitit-ring/ring-handler
+     (reitit-ring/router
+      [["/" {:get {:handler index-handler}}]
+       ["/items"
+        ["" {:get {:handler index-handler}}]
+        ["/:item-id" {:get {:handler index-handler
+                            :parameters {:path {:item-id int?}}}}]]
+       ["/about" {:get {:handler index-handler}}]
+       ["/slides" {:get {:handler slide-handler}}]])
+     (reitit-ring/routes
+      (reitit-ring/create-resource-handler {:path "/" :root "/public"})
+      (reitit-ring/create-default-handler))
+     {:middleware middleware})))
