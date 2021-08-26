@@ -3,22 +3,8 @@
    [reitit.ring :as reitit-ring]
    [clj-slides.middleware :refer [middleware]]
    [hiccup.page :refer [include-js include-css html5]]
-   [commonmark-hiccup.core :refer [markdown->hiccup default-config]]
-   [config.core :refer [env]]))
-
-; TODO: Move this to a separate file
-(defn parse-markdown-to-hiccup [raw-text]
-  (markdown->hiccup default-config raw-text))
-
-(defn paginate-hiccup [hiccup-seq]
-  (remove #(= [:hr] (first %))
-    (partition-by #(= [:hr] %) hiccup-seq)))
-
-(def slide-file-path "blah.md")
-
-(def slides-paginated
-  (paginate-hiccup
-    (parse-markdown-to-hiccup (slurp slide-file-path))))
+   [config.core :refer [env]]
+   [clj-slides.parser :as parser]))
 
 (def mount-target
   [:div#app
@@ -51,7 +37,7 @@
   [_request]
   {:status 200
    :headers {"Content-Type" "application/edn"}
-   :body (pr-str slides-paginated)})
+   :body (pr-str parser/slides-paginated)})
 
 (def app
   (reitit-ring/ring-handler
