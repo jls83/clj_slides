@@ -6,8 +6,9 @@
   (remove #(= [:hr] (first %))
     (partition-by #(= [:hr] %) hiccup-seq)))
 
-(defn parse-markdown-to-hiccup [raw-text]
-  (markdown->hiccup default-config raw-text))
-
 (defn get-paginated-slides [slides-path]
-  (paginate-hiccup (parse-markdown-to-hiccup (slurp slides-path))))
+  (->>
+    slides-path
+    (slurp)
+    (markdown->hiccup default-config)
+    (paginate-hiccup)))
